@@ -4,12 +4,14 @@ import {createNewContact, fetchContacts} from "../thunks/contactThunk.ts";
 
 interface ContactsState {
     contacts: IContact[]
+    details: IContact | null
     isLoading: boolean
     isError: boolean
 }
 
 const initialState: ContactsState = {
     contacts: [],
+    details: null,
     isLoading: false,
     isError: false,
 }
@@ -17,7 +19,14 @@ const initialState: ContactsState = {
 const contactsSlice = createSlice({
     name: "contacts",
     initialState,
-    reducers: {},
+    reducers: {
+        selectContact (state, action: PayloadAction<IContact>) {
+            state.details = action.payload;
+        },
+        hideDetails(state ) {
+            state.details = null
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(
@@ -54,4 +63,4 @@ const contactsSlice = createSlice({
 
 export const contactsReducer = contactsSlice.reducer;
 
-export const {} = contactsSlice.actions;
+export const {selectContact, hideDetails} = contactsSlice.actions;
