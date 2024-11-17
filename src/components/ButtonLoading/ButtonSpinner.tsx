@@ -2,10 +2,10 @@
 const ButtonSpinner = () => {
     return (
         <div>
-            <button className="btn btn-primary" type="button" disabled>
+            <div className="btn btn-primary" >
                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Loading...
-            </button>
+            </div>
         </div>
     );
 };

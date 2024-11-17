@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IContact} from "../../types.ts";
-import {createNewContact, fetchContacts} from "../thunks/contactThunk.ts";
+import {ApiContact, IContact} from "../../types.ts";
+import {createNewContact, editingContact, fetchContacts, getContactById} from "../thunks/contactThunk.ts";
 
 interface ContactsState {
     contacts: IContact[]
     details: IContact | null
+    oneContact: ApiContact | null
     isLoading: boolean
     isError: boolean
 }
@@ -12,6 +13,7 @@ interface ContactsState {
 const initialState: ContactsState = {
     contacts: [],
     details: null,
+    oneContact: null,
     isLoading: false,
     isError: false,
 }
@@ -55,6 +57,36 @@ const contactsSlice = createSlice({
                 })
             .addCase(
                 createNewContact.rejected, (state) => {
+                    state.isLoading = false
+                    state.isError = true
+                })
+            .addCase(
+                getContactById.pending, (state) => {
+                    state.isLoading = true
+                    state.oneContact = null
+                })
+            .addCase(
+                getContactById.fulfilled, (state, action: PayloadAction<ApiContact | null> ) => {
+                    state.isLoading = false
+                    state.oneContact = action.payload
+                })
+            .addCase(
+                getContactById.rejected, (state) => {
+                    state.isLoading = false
+                    state.isError = true
+                })
+
+            .addCase(
+                editingContact.pending, (state) => {
+                    state.isLoading = true
+                })
+            .addCase(
+                editingContact.fulfilled, (state) => {
+                    state.isLoading = false
+                    state.oneContact = null
+                })
+            .addCase(
+                editingContact.rejected, (state) => {
                     state.isLoading = false
                     state.isError = true
                 })

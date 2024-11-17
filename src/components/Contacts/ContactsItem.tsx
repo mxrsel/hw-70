@@ -10,7 +10,7 @@ interface Props {
 
 const ContactsItem: React.FC<Props> = ({contact}) => {
     const dispatch = useAppDispatch();
-    let imageNoPhoto = noPhoto;
+    const imageNoPhoto = noPhoto;
 
     const handleClick = () => {
         dispatch(selectContact(contact))
@@ -20,6 +20,7 @@ const ContactsItem: React.FC<Props> = ({contact}) => {
         <div onClick={handleClick} style={{cursor: 'pointer'}}>
             <img src={contact.imageUrl || imageNoPhoto}  alt={contact.imageUrl}/>
             <div>{contact.name}</div>
+
         </div>
     );
 };

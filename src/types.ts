@@ -2,14 +2,14 @@ export interface IContact {
     id: string
     name: string
     email: string
-    phone: string
+    phone: number
     imageUrl: string
 }
 
 export interface ContactMutation {
     name: string
     email: string
-    phone: string
+    phone: number
     imageUrl: string
 }
 

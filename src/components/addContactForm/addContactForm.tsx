@@ -5,19 +5,20 @@ import ButtonLoading from "../ButtonLoading/ButtonLoading.tsx";
 interface Props {
     addNewContacts: (contact: ApiContact) => void;
     existingContact?: ContactMutation;
+    isEdit?: boolean;
     isLoading?: boolean
 }
 
 const initialState = {
     name: '',
-    phone: '',
+    phone: 0,
     email: '',
     imageUrl: ''
 }
 
 export const noPhoto = 'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'
 
-const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = initialState, isLoading = false}) => {
+const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = initialState, isLoading = false, isEdit = false}) => {
     const [newContact, setNewContact] = useState<ContactMutation>(existingContact)
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +34,25 @@ const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = init
         event.preventDefault();
         addNewContacts({
             ...newContact,
+            phone: Number(newContact.phone.toString())
         })
+
+        if (!isEdit) {
+            setNewContact({
+                name: '',
+                phone: 0,
+                email: '',
+                imageUrl: ''
+            });
+        }
+
     }
+
 
     return (
         <>
             <form className='form-control mt-3' onSubmit={onFormSubmit}>
+                <h1>{isEdit ? 'Edit' : 'Add New'} Contact</h1>
                 <div>
                     <label>
                         Name:
@@ -58,7 +72,7 @@ const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = init
                     <label>
                         Phone:
                         <input
-                            type='text'
+                            type='tel'
                             name='phone'
                             id='phone'
                             className='form-control'
@@ -88,7 +102,7 @@ const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = init
                     <label>
                         Photo:
                         <input
-                            type='text'
+                            type='url'
                             name='imageUrl'
                             id='imageUrl'
                             className='form-control'
@@ -105,7 +119,7 @@ const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = init
                      alt={newContact.imageUrl}/>
                 </label>
 
-                <ButtonLoading text={'Add'} isLoading={isLoading} isDisabled={isLoading} />
+                <ButtonLoading text={isEdit ? 'Edit' : 'Add'} isLoading={isLoading} isDisabled={isLoading} />
             </form>
         </>
     );

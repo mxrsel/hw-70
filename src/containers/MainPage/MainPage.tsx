@@ -5,6 +5,7 @@ import Spinner from "../../components/Spinner/Spinner.tsx";
 import Contacts from "../../components/Contacts/Contacts.tsx";
 import {hideDetails} from "../../store/slices/contactsSlice.ts";
 import Modal from "../../components/Modal/Modal.tsx";
+import {NavLink} from "react-router-dom";
 
 const MainPage = () => {
     const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const MainPage = () => {
 
     const fetchingContacts = useCallback( async() => {
        await dispatch(fetchContacts())
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         void fetchingContacts()
@@ -27,7 +28,6 @@ const MainPage = () => {
     }
 
     useEffect(() => {
-        if (selectedContact) {}
         setShowModal(true)
     }, [selectedContact]);
 
@@ -49,11 +49,13 @@ const MainPage = () => {
 
             {selectedContact && (
                 <Modal show={showModal} closeModal={handleCloseModal} title="Contact Info">
-                    <div>
+                    <div key={selectedContact.id}>
                         <h1>{selectedContact.name}</h1>
                         <img src={selectedContact.imageUrl} alt={selectedContact.imageUrl} />
                         <p>Phone: {selectedContact.phone}</p>
                         <p>Email: {selectedContact.email}</p>
+
+                        <NavLink to={`/editContact/${selectedContact.id}`}>Edit</NavLink>
                     </div>
                 </Modal>
             )}
