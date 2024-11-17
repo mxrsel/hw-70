@@ -26,5 +26,5 @@ export const fetchContacts = createAsyncThunk<IContact[], void, {state: RootStat
 
 export const createNewContact = createAsyncThunk<void, ApiContact>('contacts/createNewContact',
     async(contact) => {
-        await axiosApi.post('contacts.json', {...contact})
+        await axiosApi.post('/contacts.json', {...contact})
 })
