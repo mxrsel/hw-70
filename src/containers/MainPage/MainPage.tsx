@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {fetchContacts} from "../../store/thunks/contactThunk.ts";
+import {deleteOneContact, fetchContacts} from "../../store/thunks/contactThunk.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import Contacts from "../../components/Contacts/Contacts.tsx";
 import {hideDetails} from "../../store/slices/contactsSlice.ts";
@@ -31,6 +31,7 @@ const MainPage = () => {
         setShowModal(true)
     }, [selectedContact]);
 
+
     return (
         <>
             {loading ? (
@@ -55,7 +56,8 @@ const MainPage = () => {
                         <p>Phone: {selectedContact.phone}</p>
                         <p>Email: {selectedContact.email}</p>
 
-                        <NavLink to={`/editContact/${selectedContact.id}`}>Edit</NavLink>
+                        <NavLink className='btn btn-success me-2' to={`/editContact/${selectedContact.id}`}>Edit</NavLink>
+                        <button className='btn btn-danger' type='submit' onClick={() => dispatch(deleteOneContact(selectedContact.id))}>delete</button>
                     </div>
                 </Modal>
             )}

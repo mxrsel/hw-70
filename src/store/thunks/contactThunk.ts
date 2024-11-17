@@ -43,5 +43,11 @@ export const editingContact = createAsyncThunk<void, {contactId: string, contact
     'contacts/editingContact',
     async({contactId, contact}) => {
         await axiosApi.put(`/contacts/${contactId}.json`, {...contact})
+    })
+
+export const deleteOneContact = createAsyncThunk(
+    'contacts/deleteOneContact',
+    async(contactId: string) => {
+        await axiosApi.delete(`/contacts/${contactId}.json`)
     }
 )

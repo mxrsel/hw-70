@@ -1,4 +1,4 @@
-import Layout from "./containers/Toolbar/Layout/Layout.tsx";
+import Layout from "./containers/Layout/Layout.tsx";
 import {Route, Routes} from "react-router-dom";
 import NewContact from "./containers/NewContact/NewContact.tsx";
 import MainPage from "./containers/MainPage/MainPage.tsx";

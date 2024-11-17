@@ -17,11 +17,11 @@ const ContactsItem: React.FC<Props> = ({contact}) => {
     }
 
     return (
-        <div onClick={handleClick} style={{cursor: 'pointer'}}>
-            <img src={contact.imageUrl || imageNoPhoto}  alt={contact.imageUrl}/>
-            <div>{contact.name}</div>
+        <div onClick={handleClick} style={{cursor: 'pointer'}} className='d-flex justify-content-lg-between '>
+            <img className='m-2' src={contact.imageUrl || imageNoPhoto}  alt={contact.imageUrl} style={{borderRadius: '8px'}}/>
+            <h1 className='text-light ms-5 mt-5 text-uppercase'>{contact.name}</h1>
+            </div>
 
-        </div>
     );
 };
 

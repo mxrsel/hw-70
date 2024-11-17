@@ -1,6 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ApiContact, IContact} from "../../types.ts";
-import {createNewContact, editingContact, fetchContacts, getContactById} from "../thunks/contactThunk.ts";
+import {
+    createNewContact,
+    deleteOneContact,
+    editingContact,
+    fetchContacts,
+    getContactById
+} from "../thunks/contactThunk.ts";
 
 interface ContactsState {
     contacts: IContact[]
@@ -8,6 +14,7 @@ interface ContactsState {
     oneContact: ApiContact | null
     isLoading: boolean
     isError: boolean
+    isDeleteLoading: boolean | string
 }
 
 const initialState: ContactsState = {
@@ -16,6 +23,7 @@ const initialState: ContactsState = {
     oneContact: null,
     isLoading: false,
     isError: false,
+    isDeleteLoading: false
 }
 
 const contactsSlice = createSlice({
@@ -87,6 +95,19 @@ const contactsSlice = createSlice({
                 })
             .addCase(
                 editingContact.rejected, (state) => {
+                    state.isLoading = false
+                    state.isError = true
+                })
+            .addCase(
+                deleteOneContact.pending, (state, {meta}) => {
+                    state.isDeleteLoading = meta.arg
+                })
+            .addCase(
+                deleteOneContact.fulfilled, (state) => {
+                    state.isLoading = false
+                })
+            .addCase(
+                deleteOneContact.rejected, (state) => {
                     state.isLoading = false
                     state.isError = true
                 })

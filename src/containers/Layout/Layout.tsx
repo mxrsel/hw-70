@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import Toolbar from "../Toolbar.tsx";
+import Toolbar from "../Toolbar/Toolbar.tsx";
 
 const Layout: React.FC<PropsWithChildren> = ({children}) => {
     return (
@@ -8,7 +8,7 @@ const Layout: React.FC<PropsWithChildren> = ({children}) => {
                 <Toolbar />
             </header>
 
-            <div className='main-container'>
+            <div className='main-container bg-dark mt-4' style={{borderRadius: '10px'}}>
                 {children}
             </div>
         </>

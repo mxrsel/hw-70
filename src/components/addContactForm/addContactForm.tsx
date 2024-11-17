@@ -1,6 +1,7 @@
 import React, {FormEvent, useState} from 'react';
 import {ApiContact, ContactMutation} from "../../types.ts";
 import ButtonLoading from "../ButtonLoading/ButtonLoading.tsx";
+import {NavLink} from "react-router-dom";
 
 interface Props {
     addNewContacts: (contact: ApiContact) => void;
@@ -115,11 +116,16 @@ const AddContactForm: React.FC<Props> = ({addNewContacts, existingContact = init
 
                 <label>
                     Photo Preview:
-                <img className='w-auto' src={newContact.imageUrl || noPhoto}
+                <img className='w-auto mt-3' src={newContact.imageUrl || noPhoto}
                      alt={newContact.imageUrl}/>
                 </label>
 
+                <div className='d-flex mt-4'>
+
                 <ButtonLoading text={isEdit ? 'Edit' : 'Add'} isLoading={isLoading} isDisabled={isLoading} />
+
+                <NavLink className='btn btn-danger ms-3' to='/'>Back to Contacts</NavLink>
+                </div>
             </form>
         </>
     );
